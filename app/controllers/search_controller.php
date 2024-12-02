@@ -13,12 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$errors[] = 'Поисковый запрос должен содержать не менее 3-х символов.';
 	} else {
 		// запрос к базе данных для поиска комментариев на основе поискового запроса
-		$query = "SELECT * FROM comments WHERE body LIKE :term";
-		$params = [':term' => '%' . $searchTerm . '%'];
-		$pdo = get_pdo_connection($_ENV['DB_HOST'], $_ENV['DB_DATABASE'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_PORT'] ?? '3306');
-		$comments = db_query($pdo, $query, $params);
-
-		//
 		$query = "SELECT comments.*, posts.title AS post_title
           FROM comments
           INNER JOIN posts ON comments.post_id = posts.id
